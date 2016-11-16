@@ -1,0 +1,9 @@
+*.o
+*.d
+MassSpring
+mass_spring_test.config
+mass_spring_test.creator
+mass_spring_test.creator.user
+mass_spring_test.files
+mass_spring_test.includes
+
