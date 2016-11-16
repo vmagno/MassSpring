@@ -140,15 +140,23 @@ __global__ void IntegrateSystemKernel(MSSParameters Param, Arrays DeviceArrays)
     NewVelocity = NewVelocity * Param.Damping;
 
     DeviceArrays.Velocities[ParticleId] = NewVelocity;
+}
+
 #ifdef DEBUG_VELOCITY
+__global__ void UpdateDisplayedVelocities(MSSParameters Param, Arrays DeviceArrays)
+{
+    const uint ParticleId = GetGlobalThreadId();
+
+    if (ParticleId >= Param.NumParticles) return;
+
     DeviceArrays.VelocityVectors[ParticleId*2] = DeviceArrays.Positions[ParticleId];
-    DeviceArrays.VelocityVectors[ParticleId*2 + 1] = DeviceArrays.Positions[ParticleId] + NewVelocity * 0.2f;
+    DeviceArrays.VelocityVectors[ParticleId*2 + 1] = DeviceArrays.Positions[ParticleId] + DeviceArrays.Velocities[ParticleId] * 0.2f;
     //DeviceArrays.VelocityVectors[ParticleId*2 + 1] = DeviceArrays.Positions[ParticleId] + make_float3(0.05f, 0.f, 0.f) * 1.f;
 
     DeviceArrays.VelocityColors[ParticleId*2] = make_float4(1.f);
     DeviceArrays.VelocityColors[ParticleId*2 + 1] = make_float4(1.f);
-#endif
 }
+#endif // DEBUG_VELOCITY
 
 void LaunchIntegrateSystem(MSSParameters Param, Arrays DeviceArrays)
 {
@@ -162,6 +170,11 @@ void LaunchIntegrateSystem(MSSParameters Param, Arrays DeviceArrays)
     }
 
     IntegrateSystemKernel<<<GridSize, BlockSize>>>(Param, DeviceArrays);
+
+#ifdef DEBUG_VELOCITY
+    UpdateDisplayedVelocities<<<GridSize, BlockSize>>>(Param, DeviceArrays);
+#endif
+
     CudaCheck(cudaThreadSynchronize());
 
 //    printf("Integrate done %i %i %i by %i %i %i, NumParticles = %i\n",

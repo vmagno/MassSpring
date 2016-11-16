@@ -25,6 +25,7 @@ MassSpringSystem::MassSpringSystem()
       LocVertex(0),
       LocColor(0),
       bPrintTimers(false),
+      bDisplayVelocities(true),
       TotalMass(0.f)
 {
     Particles.clear();
@@ -302,9 +303,12 @@ void MassSpringSystem::Draw()
     glBindVertexArray(0);
 
 #ifdef DEBUG_VELOCITY
-    glBindVertexArray(VaoVel);
-    glDrawArrays(GL_LINES, 0, Particles.size() * 2);
-    glBindVertexArray(0);
+    if (bDisplayVelocities)
+    {
+        glBindVertexArray(VaoVel);
+        glDrawArrays(GL_LINES, 0, Particles.size() * 2);
+        glBindVertexArray(0);
+    }
 #endif
 }
 

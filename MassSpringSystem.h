@@ -36,6 +36,7 @@ public:
     void SetFixedTop(bool bFixedTop = true) { Param.bFixedTop = bFixedTop; }
     void ToggleFixedTop() { Param.bFixedTop = !Param.bFixedTop; }
     void TogglePrintTime() { bPrintTimers = !bPrintTimers; }
+    void ToggleVelocityDisplay() { bDisplayVelocities = !bDisplayVelocities; }
 
 private:
 
@@ -63,6 +64,7 @@ private:
     BasicTimer BufferUpdateTime;
 
     bool bPrintTimers;
+    bool bDisplayVelocities;
 
     float TotalMass;
 

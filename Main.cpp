@@ -206,8 +206,7 @@ void FenetreTP::clavier( TP_touche touche )
       break;
 
    case TP_v: // Recharger les fichiers des nuanceurs et recréer le programme
-      chargerNuanceurs();
-      std::cout << "// Recharger nuanceurs" << std::endl;
+      MSS->ToggleVelocityDisplay();
       break;
 
    case TP_i: // Réinitiliaser le point de vue

@@ -19,6 +19,11 @@ inline void CudaCallWithCheck(cudaError_t ReturnCode, const char* Filename, int 
     }
 }
 
+enum {
+    SYMPLECTIC_EULER = 0,
+    FORWARD_EULER
+};
+
 struct MSSParameters
 {
     float Gravity;
@@ -34,6 +39,8 @@ struct MSSParameters
     uint NumParticles;
     uint NumSprings;
 
+    uint IntegrationMethod;
+
     void init()
     {
         Gravity = 9.81f;
@@ -46,6 +53,10 @@ struct MSSParameters
         bFixedTop = false;
 
         DeltaT = 0.f;
+        NumParticles = 0;
+        NumSprings = 0;
+
+        IntegrationMethod = 0;
     }
 
 };

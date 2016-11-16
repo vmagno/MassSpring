@@ -31,7 +31,8 @@ LDFLAGS += $(shell pkg-config --libs glew)
 LDFLAGS += $(shell pkg-config --libs sdl2)
 LDFLAGS += $(CUDA_LIBS)
 
-TARGET := main
+TARGET := MassSpring
+
 SRC := $(shell find . -name '*.cpp')
 DEPFILES := $(patsubst %.cpp,%.d,$(SRC))
 OBJ := $(patsubst %.cpp,%.o,$(SRC))
